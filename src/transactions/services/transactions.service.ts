@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { TransactionModel } from '../models/transaction.model';
 import { TransactionRepository } from '../repositories/transaction.repository';
-import { CategorizerService } from '../../categorizer/categorizer.service';
+import { TransactionCategoriserService } from '../../categoriser/transaction-categoriser.service';
 
 @Injectable()
 export class TransactionsService {
   constructor(
     private readonly transactionRepository: TransactionRepository,
-    private readonly categorizerService: CategorizerService
+    private readonly transactionCategoriserService: TransactionCategoriserService
   ) {}
 
   async getAll({ limit, after }: { limit: number; after?: string }): Promise<TransactionModel[]> {
@@ -20,7 +20,7 @@ export class TransactionsService {
 
   async create(model: TransactionModel): Promise<void> {
     await this.transactionRepository.create(model);
-    await this.categorizerService.scheduleTransactionCategorize(model.transactionId);
+    await this.transactionCategoriserService.scheduleTransactionCategorise(model.transactionId);
   }
 
   async updateCategory({ transactionId, category }: { transactionId: string; category: string }): Promise<void> {

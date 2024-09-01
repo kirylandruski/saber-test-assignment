@@ -1,9 +1,9 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { CategorizerService } from './categorizer.service';
-import { CategorizerProcessor } from './categorizer.processor';
+import { TransactionCategoriserService } from './transaction-categoriser.service';
+import { CategoriserProcessor } from './categoriser.processor';
 import { TransactionsModule } from '../transactions/transactions.module';
-import { TRANSACTION_CATEGORIZE_COMMAND_QUEUE_NAME } from './consts/queue.const';
+import { TRANSACTION_CATEGORISE_COMMAND_QUEUE_NAME } from './consts/queue.const';
 import { AppConfigModule } from '../appconfig/app-config.module';
 import { AppConfigService } from '../appconfig/app-config.service';
 import { ExternalServicesModule } from '../externalservices/externalservices.module';
@@ -20,11 +20,11 @@ import { ExternalServicesModule } from '../externalservices/externalservices.mod
       }),
       inject: [AppConfigService],
     }),
-    BullModule.registerQueue({ name: TRANSACTION_CATEGORIZE_COMMAND_QUEUE_NAME }),
+    BullModule.registerQueue({ name: TRANSACTION_CATEGORISE_COMMAND_QUEUE_NAME }),
     forwardRef(() => TransactionsModule),
     ExternalServicesModule,
   ],
-  providers: [CategorizerService, CategorizerProcessor],
-  exports: [CategorizerService],
+  providers: [TransactionCategoriserService, CategoriserProcessor],
+  exports: [TransactionCategoriserService],
 })
-export class CategorizerModule {}
+export class CategoriserModule {}
