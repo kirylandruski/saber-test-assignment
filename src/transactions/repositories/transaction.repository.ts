@@ -30,8 +30,7 @@ export class TransactionRepository {
   }
 
   async create(transaction: TransactionModel): Promise<void> {
-    const createdTransaction = new this.transactionModel(TransactionRepository.mapToDocument(transaction));
-    await createdTransaction.save();
+    await this.transactionModel.create(TransactionRepository.mapToDocument(transaction));
   }
 
   async updateCategory({ transactionId, category }: { transactionId: string; category: string }): Promise<void> {
