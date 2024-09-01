@@ -1,6 +1,7 @@
-import { TransactionDto } from '../dtos/transaction.dto';
+import { CreateTransactionDto } from '../dtos/create-transaction.dto';
 import utc from 'dayjs/plugin/utc';
 import dayjs, { Dayjs } from 'dayjs';
+import { GetTransactionDto } from '../dtos/get-transaction.dto';
 
 dayjs.extend(utc);
 
@@ -11,21 +12,23 @@ export class TransactionModel {
     public timestamp: Dayjs,
     public description: string,
     public transactionType: string,
-    public accountNumber: string
+    public accountNumber: string,
+    public category: string | null
   ) {}
 
-  static fromDto(dto: TransactionDto): TransactionModel {
+  static fromDto(dto: CreateTransactionDto): TransactionModel {
     return new TransactionModel(
       dto.transactionId,
       dto.amount,
       dayjs.utc(dto.timestamp, 'YYYY-MM-DD HH:mm:ss'),
       dto.description,
       dto.transactionType,
-      dto.accountNumber
+      dto.accountNumber,
+      null
     );
   }
 
-  toDto(): TransactionDto {
+  toDto(): GetTransactionDto {
     return {
       transactionId: this.transactionId,
       amount: this.amount,
@@ -33,6 +36,7 @@ export class TransactionModel {
       description: this.description,
       transactionType: this.transactionType,
       accountNumber: this.accountNumber,
+      category: this.category,
     };
   }
 }

@@ -14,7 +14,7 @@ async function bootstrap() {
       transformOptions: {
         enableImplicitConversion: true,
       },
-    }),
+    })
   );
 
   const appConfigService = app.get(AppConfigService);

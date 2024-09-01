@@ -1,15 +1,16 @@
 import { Controller, Get, Post, Query, Body, Param, NotFoundException } from '@nestjs/common';
 import { TransactionsService } from './services/transactions.service';
-import { TransactionDto } from './dtos/transaction.dto';
+import { CreateTransactionDto } from './dtos/create-transaction.dto';
 import { TransactionModel } from './models/transaction.model';
 import { QueryTransactionsDto } from './dtos/query-transactions.dto';
+import { GetTransactionDto } from './dtos/get-transaction.dto';
 
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get()
-  async getAll(@Query() query: QueryTransactionsDto): Promise<TransactionDto[]> {
+  async getAll(@Query() query: QueryTransactionsDto): Promise<GetTransactionDto[]> {
     const transactions = await this.transactionsService.getAll({
       limit: query.limit,
       after: query.after,
@@ -19,7 +20,7 @@ export class TransactionsController {
   }
 
   @Get(':transactionId')
-  async getOne(@Param('transactionId') transactionId: string): Promise<TransactionDto> {
+  async getOne(@Param('transactionId') transactionId: string): Promise<GetTransactionDto> {
     const transaction = await this.transactionsService.getOne(transactionId);
     if (!transaction) {
       throw new NotFoundException();
@@ -28,7 +29,7 @@ export class TransactionsController {
   }
 
   @Post()
-  async create(@Body() body: TransactionDto): Promise<void> {
+  async create(@Body() body: CreateTransactionDto): Promise<void> {
     const transaction = TransactionModel.fromDto(body);
     await this.transactionsService.create(transaction);
   }

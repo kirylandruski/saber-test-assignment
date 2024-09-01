@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, Matches } from 'class-validator';
 
-export class TransactionDto {
+export class CreateTransactionDto {
   @IsString()
   @IsNotEmpty()
   transactionId: string;
@@ -12,7 +12,7 @@ export class TransactionDto {
   @IsString()
   @IsNotEmpty()
   @Matches(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/, {
-    message: 'Timestamp must be in YYYY-MM-DD HH:mm:ss format',
+    message: 'timestamp must be in YYYY-MM-DD HH:mm:ss format',
   })
   timestamp: string;
 

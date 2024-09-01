@@ -19,6 +19,9 @@ export class TransactionDocument {
 
   @Prop()
   accountNumber: string;
+
+  @Prop({ default: null })
+  category: string | null;
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(TransactionDocument);

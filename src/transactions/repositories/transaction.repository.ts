@@ -34,16 +34,8 @@ export class TransactionRepository {
     await createdTransaction.save();
   }
 
-  async update(transactionId: string, transaction: TransactionModel): Promise<TransactionModel> {
-    const updatedTransaction = await this.transactionModel
-      .findByIdAndUpdate(transactionId, TransactionRepository.mapToDocument(transaction), { new: true })
-      .exec();
-
-    if (!updatedTransaction) {
-      return null;
-    }
-
-    return TransactionRepository.mapToModel(updatedTransaction);
+  async updateCategory({ transactionId, category }: { transactionId: string; category: string }): Promise<void> {
+    await this.transactionModel.updateOne({ _id: transactionId }, { $set: { category } }).exec();
   }
 
   private static mapToModel(document: TransactionDocument): TransactionModel {
@@ -53,7 +45,8 @@ export class TransactionRepository {
       dayjs(document.timestamp),
       document.description,
       document.transactionType,
-      document.accountNumber
+      document.accountNumber,
+      document.category
     );
   }
 
@@ -65,6 +58,7 @@ export class TransactionRepository {
       description: model.description,
       transactionType: model.transactionType,
       accountNumber: model.accountNumber,
+      category: model.category,
     };
   }
 }
