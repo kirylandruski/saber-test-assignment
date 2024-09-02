@@ -1,6 +1,24 @@
 version: '3.8'
 
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MONGODB_URL: mongodb://saber:saber@mongo:27017
+    env_file:
+      - .env.local-docker
+    depends_on:
+      - mongo
+      - redis
+
   mongo:
     image: mongo:latest
     restart: always

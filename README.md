@@ -1,85 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Transactions Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a Node.js application using NestJS, connected to MongoDB and Redis. The following instructions will guide you on how to start, stop, and manage the services using the provided Makefile.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Prerequisites
 
-## Description
+- Docker and Docker Compose installed on your system.
+- Node.js and npm installed for running the application locally.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Makefile Commands
 
-## Project setup
+### Start All Services
 
-```bash
-$ npm install
+To start the application along with MongoDB and Redis in detached mode (running in the background), use:
+
+```sh
+make start-all
 ```
 
-## Compile and run the project
+### Start Only Database Services
 
-```bash
-# development
-$ npm run start
+If you want to start only MongoDB and Redis, use the following command:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```sh
+make start-db
 ```
 
-## Run tests
+### Start the App Locally with Containers for MongoDB and Redis
 
-```bash
-# unit tests
-$ npm run test
+To run the application on your local host while MongoDB and Redis run in containers, use:
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+make start-host-app
 ```
 
-## Resources
+This will start MongoDB and Redis in containers and run the Node.js application locally, using the environment variables from `.env.local`.
 
-Check out a few resources that may come in handy when working with NestJS:
+### Stop All Services
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+To stop all running services (app, MongoDB, and Redis):
 
-## Support
+```sh
+make stop-all
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Stop Only Database Services
 
-## Stay in touch
+To stop only the MongoDB and Redis services:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```sh
+make stop-db
+```
 
-## License
+### Clean Up Docker Containers, Networks, and Volumes
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+To clean up and remove all containers, networks, and volumes created by Docker Compose:
+
+```sh
+make clean-up
+```
+
+### Run the App Locally for Development
+
+For local development, you can run the NestJS application on your host machine while connecting to MongoDB and Redis containers:
+
+```sh
+make run-local-app
+```
+
+This will run the app in development mode with the specified environment variables.
+
+### Build and Start All Services in Containers
+
+To build the Docker images and start the application along with MongoDB and Redis in containers:
+
+```sh
+make build-and-start
+```
+
+### View Logs of All Running Services
+
+To view logs for all running services:
+
+```sh
+make view-logs
+```
+
+### View Logs of a Specific Service
+
+To view logs of a specific service (e.g., the app service), use:
+
+```sh
+make view-logs-service SERVICE=app
+```
+
+Replace `app` with `mongo` or `redis` to view logs for those services instead.
+
+## Additional Information
+
+- The application is designed to work seamlessly with Docker for easy setup and management.
+- Make sure Docker is running before executing any of the `make` commands that involve Docker Compose.
