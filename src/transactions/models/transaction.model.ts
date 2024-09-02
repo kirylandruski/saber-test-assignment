@@ -20,7 +20,7 @@ export class TransactionModel {
     return new TransactionModel(
       dto.transactionId,
       dto.amount,
-      dayjs.utc(dto.timestamp, 'YYYY-MM-DD HH:mm:ss'),
+      dayjs.utc(dto.timestamp, 'YYYY-MM-DD HH:mm:ss.SSSSSS'),
       dto.description,
       dto.transactionType,
       dto.accountNumber,
@@ -32,7 +32,7 @@ export class TransactionModel {
     return {
       transactionId: this.transactionId,
       amount: this.amount,
-      timestamp: this.timestamp.utc().format('YYYY-MM-DD HH:mm:ss'),
+      timestamp: this.timestamp.utc().format('YYYY-MM-DD HH:mm:ss.SSSSSS'),
       description: this.description,
       transactionType: this.transactionType,
       accountNumber: this.accountNumber,

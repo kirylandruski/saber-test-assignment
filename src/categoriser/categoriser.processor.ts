@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { TRANSACTION_CATEGORIES } from './consts/categories.const';
 import { TRANSACTION_CATEGORISE_PROMPT } from './consts/prompt.const';
 
-@Processor(TRANSACTION_CATEGORISE_COMMAND_QUEUE_NAME)
+@Processor(TRANSACTION_CATEGORISE_COMMAND_QUEUE_NAME, { concurrency: 10 })
 export class CategoriserProcessor extends WorkerHost {
   constructor(
     private readonly openaiService: OpenAIService,
